@@ -1,5 +1,5 @@
 # 서울시 고도 데이터 분석
-import numpy as np
+
 import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib import font_manager
