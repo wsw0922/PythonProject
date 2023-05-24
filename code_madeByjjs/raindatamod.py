@@ -17,8 +17,11 @@ import pandas as pd
 # 기준이 될 해당년도 일별 강수량 파일
 refValue = pd.read_csv("./data/2022년 강수량 (일별).csv", index_col="일").fillna(0) # NAN을 다 0으로
 EndMonth = [31,28,31,30,31,30,31,31,30,31,30,31] # 각월의 말일
-areaSeoul = 605.24
-
+distSquare = pd.read_csv("./data/서울시 지역구 면적.csv",index_col='구청명',encoding='cp949')
+distName = list(distSquare.index)
+data = {
+        '구청명' : distName
+    }
 #지역별 일 강수량 데이터
 for mon in ["01","02","03","04","05","06","07","08","09","10","11","12"]:    
     #데이터
@@ -26,8 +29,8 @@ for mon in ["01","02","03","04","05","06","07","08","09","10","11","12"]:
     #해당월 비교값
     monthlyRain = refValue[mon + '월']
     
-    #구청명, 날짜 문자열
-    distName = list(set(rainData['구청명']))
+    #날짜 문자열
+    
     day = []
     for dayNum in range(EndMonth[int(mon) - 1]):
         if(dayNum < 9) :
@@ -49,7 +52,7 @@ for mon in ["01","02","03","04","05","06","07","08","09","10","11","12"]:
                 value.append(0) # monthlyRain 값이 기준이기에 이상값이 있으면 무시하기 위해 0 입력
         else:
             if(dailyRain[v] != 0):
-                value.append(round(monthlyRain[v] / dailyRain[v] * areaSeoul,4))
+                value.append(round(monthlyRain[v] / dailyRain[v],4))
             else:
                 value.append(0) # 무시를 위해 0
     # 데이터 출력
@@ -58,7 +61,7 @@ for mon in ["01","02","03","04","05","06","07","08","09","10","11","12"]:
         '강수량' : dailyRain,
         '보정값' : value
     }))'''
-    amount = [] 
+    amount = []
     for dist in distName:
         temp = rainData.loc[rainData['구청명']==dist,['자료수집 시각','10분우량']]
         for i in range(len(value)):
@@ -67,9 +70,7 @@ for mon in ["01","02","03","04","05","06","07","08","09","10","11","12"]:
                 #print(temp.loc[(temp['자료수집 시각'].str[8:10] == str(i + 1).zfill(2)) & temp['10분우량'] > 0,['10분우량']])
                 #print(temp.loc[temp['10분우량'] > 0])
         amount.append(round(temp['10분우량'].sum(),0))
-    data = {
-        '구청명' : distName,
-        '월강수량' : amount
-    }
-    rainData = pd.DataFrame(data)
-    rainData.to_csv(f'./data/2022 서울 지역구별 월 강우량 by pandas/서울 {mon}월 지역구별 강우량.csv',encoding='utf-8-sig')
+    data[f'{mon}월강수량'] = amount
+rainData = pd.DataFrame(data)    
+rainData.to_csv(f'./data/서울 지역구별 월강수량.csv',encoding='utf-8-sig')
+print("완료")
