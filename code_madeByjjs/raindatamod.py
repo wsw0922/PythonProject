@@ -66,7 +66,7 @@ for mon in ["01","02","03","04","05","06","07","08","09","10","11","12"]:
         temp = rainData.loc[rainData['구청명']==dist,['자료수집 시각','10분우량']]
         for i in range(len(value)):
             if(value[i] >= 0 ):
-                temp.loc[temp['자료수집 시각'].str[:10] == day[i],['10분우량']] = temp['10분우량'] * value[i]
+                temp.loc[temp['자료수집 시각'].str[:10] == day[i],['10분우량']] = temp['10분우량'] * value[i] * 25
                 #print(temp.loc[(temp['자료수집 시각'].str[8:10] == str(i + 1).zfill(2)) & temp['10분우량'] > 0,['10분우량']])
                 #print(temp.loc[temp['10분우량'] > 0])
         amount.append(round(temp['10분우량'].sum(),0))
