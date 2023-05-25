@@ -9,7 +9,7 @@ import webbrowser
 
 # 지도 생성, 좌표는 서울 중앙으로 임의 지정함.
 # location=[위도, 경도]
-map_osm = folium.Map(location=[37.566345, 126.977893], zoom_start=12)
+map_osm = folium.Map(location=[37.5565, 126.9780], zoom_start=12)
 
 # 데이터 불러오기
 # 하수도 및 부대시설 현황, 서울시 자치구별 좌표, 서울시 자치구별 면적
@@ -75,7 +75,7 @@ for item in set(uw_data['자치구별']):
     marker.add_to(map_osm)
 
 # 지도를 HTML 파일로 저장
-map_osm.save('map_div.html')
+map_osm.save('map_gj.html')
 
 # 웹 브라우저에서 HTML 파일 열기
 webbrowser.open('map_gj.html')
