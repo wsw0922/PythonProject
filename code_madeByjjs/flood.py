@@ -12,7 +12,7 @@ crs = pd.read_csv("./data/SeoulMapping.csv")
 #지도 생성
 seoul = folium.Map(location=[37.557945, 126.99419], zoom_start=11)
 #건수가 1000건이 넘는 구
-tomuch = ("영등포구","동작구","관악구")
+tomuch = ('영등포구','동작구','관악구','서초구','구로구')
 #기본값
 basicDv = 25
 basicColor = '#3186cc'
@@ -41,4 +41,4 @@ for region in set(crs['GU_NAME']):
                                 popup=folium.Popup(iframe, min_width=100, max_width=100)) #팝업
     marker.add_to(seoul)
     
-seoul.save('./code/seoul.html') # html에 저장
+seoul.save('./code_madeByjjs/seoul.html') # html에 저장
