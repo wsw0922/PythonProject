@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import matplotlib.font_manager as fm # 한글 폰트 사용
 
 # 데이터 불러오기
-data = pd.read_csv('./TestRain.csv')  # 강수량 데이터가 포함된 CSV 파일을 불러옵니다.
+data = pd.read_csv('./TestRain.csv')  # 강수량 데이터 불러오기
 
 # 한글 폰트 경로
 font_path = r'C:\Windows\Fonts\gulim.ttc'  # 한글 폰트 경로
@@ -16,18 +16,18 @@ fontprop = fm.FontProperties(fname=font_path)
 month = []
 
 for item in data['년월']:
-    month_name = item.split('.')[1]  # 'yyyy. mm'에서 mm 부분을 추출합니다
+    month_name = item.split('.')[1]  # 월 추출
     month_num = int(month_name)
     month.append(month_num)
 
 data['Month'] = month
 
 # 특성(X)과 타겟(y) 데이터 분리
-X = data[['Month']]  # 특성 데이터는 월 컬럼입니다.
-y = data['강수량(mm)']  # 타겟 데이터는 강수량 컬럼입니다.
+X = data[['Month']]  # 특성 데이터 : 월 컬럼
+y = data['강수량(mm)']  # 타겟 데이터 : 강수량 컬럼
 
 # 훈련 세트와 테스트 세트 분리
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42) #  훈련 세트와 테스트 세트 비율 80:20으로 설정
 
 # 랜덤 포레스트 모델 생성 및 학습
 model = RandomForestRegressor(n_estimators=100, random_state=42)
