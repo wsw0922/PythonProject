@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import matplotlib.font_manager as fm # 한글 폰트 사용
 
 # 데이터 불러오기
-data = pd.read_csv('./서울시 강수량.csv')  # 강수량 데이터가 포함된 CSV 파일을 불러옵니다.
+data = pd.read_csv('./TestRain.csv')  # 강수량 데이터가 포함된 CSV 파일을 불러옵니다.
 
 # 한글 폰트 경로
 font_path = r'C:\Windows\Fonts\gulim.ttc'  # 한글 폰트 경로
@@ -16,8 +16,8 @@ fontprop = fm.FontProperties(fname=font_path)
 month = []
 
 for item in data['년월']:
-    month_name = item.split('-')[0]
-    month_num = pd.to_datetime(month_name, format='%b', errors='coerce').month
+    month_name = item.split('.')[1]  # 'yyyy. mm'에서 mm 부분을 추출합니다
+    month_num = int(month_name)
     month.append(month_num)
 
 data['Month'] = month
